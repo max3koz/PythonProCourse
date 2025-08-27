@@ -4,20 +4,16 @@ class Rectangle:
 	def __init__(self, weight: float, height: float):
 		self.weight = weight
 		self.height = height
-	
-	
+		
 	def area(self) -> float:
 		return self.weight * self.height
-	
-	
+		
 	def perimeter(self) -> float:
 		return 2 * (self.weight + self.height)
-	
-	
+		
 	def is_square(self) -> float:
 		return self.weight == self.height
-	
-	
+		
 	def resize(self, new_weight, new_height):
 		self.weight = new_weight
 		self.height = new_height
