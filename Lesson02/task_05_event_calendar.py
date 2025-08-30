@@ -1,4 +1,4 @@
-def event_calendar():
+def event_calendar() -> tuple:
 	global events
 	
 	def add_event(event: str) -> None:
