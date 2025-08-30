@@ -13,8 +13,7 @@ def unsubscribe(name: str) -> str:
 	if name in subscribers:
 		subscribers.remove(name)
 		return f"{name} unsubscribed successfully!!!"
-	else:
-		return f"{name} doesn't find in the subscribers list!!!"
+	return f"{name} doesn't find in the subscribers list!!!"
 
 
 subscribers = []
