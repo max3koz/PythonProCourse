@@ -1,7 +1,4 @@
-from typing import Callable
-
-
-def create_calculator(operator: str) -> Callable[[float, float], float]:
+def create_calculator(operator: str) -> callable:
 	def calculate(a: float, b: float) -> float:
 		if operator == "+":
 			return a + b
