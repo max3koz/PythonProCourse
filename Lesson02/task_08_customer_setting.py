@@ -1,9 +1,18 @@
-def create_user_setting():
+from typing import Any, Callable
+
+
+def create_user_setting() -> Callable:
+	"""
+	The function for storing and retrieving settings
+	"""
 	setting = {"theme": "dark", "language": "ukr", "notification": "note 1"}
 	
 	def control_setting(action: str,
 	                    setting_key: str = None,
-	                    setting_value: str = None):
+	                    setting_value: str = None) -> Any:
+		"""
+		A function that allows you to save, change and view settings
+		"""
 		if action == "get":
 			if setting_key in setting:
 				return setting.get(setting_key, f"'{setting_key}' is not found "

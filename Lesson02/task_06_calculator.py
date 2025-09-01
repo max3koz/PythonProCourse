@@ -1,5 +1,17 @@
-def create_calculator(operator: str) -> callable:
+from typing import Callable
+
+
+def create_calculator(operator: str) -> Callable[[float, float], float]:
+	"""
+	The function that create calculator based on the passed operator.
+	Returns: Callable[[float, float], float]: A function that takes two numbers
+	and performs the appropriate mathematical operation.
+	Raises:	ValueError: If the operator is not supported or when dividing by zero.
+	"""
 	def calculate(a: float, b: float) -> float:
+		"""
+		The function to perform calculations.
+		"""
 		if operator == "+":
 			return a + b
 		elif operator == "-":

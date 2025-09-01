@@ -1,12 +1,29 @@
-def create_product(product_name: str) -> callable:
-	def product_with_price(product_price: float) -> callable:
-		def product_with_quantity(product_quantity: int) -> callable:
-			product = {"name": product_name,
-			           "price": product_price,
-			           "quantity": product_quantity
-			           }
+from typing import Callable
+
+
+def create_product(product_name: str) -> Callable:
+	"""
+	Function to create a product with name, price and quantity.
+	"""
+	def product_with_price(product_price: float) -> Callable:
+		"""
+		The function takes the price of a product and returns a function
+		to set the quantity.
+		"""
+		def product_with_quantity(product_quantity: int) -> Callable:
+			"""
+			The function takes the quantity of the product and returns
+			a function to update the price.
+			"""
+			product:dict[str, float | int | str] = {"name": product_name,
+			                                        "price": product_price,
+			                                        "quantity": product_quantity
+			                                        }
 			
 			def change_price(new_price: float) -> str:
+				"""
+				The function updates the product price if it is valid.
+				"""
 				if new_price >= 0:
 					product["price"] = new_price
 					return (f"The product price for the '{product['name']}' "

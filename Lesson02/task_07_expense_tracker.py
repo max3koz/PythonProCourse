@@ -1,4 +1,7 @@
 def add_expense(expense_value: float) -> None:
+	"""
+	The function that takes the cost amount and adds it to the total.
+	"""
 	global total_expense
 	if expense_value < 0:
 		print("Warning: the expense cannot be negative!!!")
@@ -8,10 +11,17 @@ def add_expense(expense_value: float) -> None:
 
 
 def get_expense() -> float:
+	"""
+	The function that returns the total cost
+	"""
 	return total_expense
 
 
 def expensive_tracker() -> None:
+	"""
+	A function that implements a console interface for the user, with which it
+	is possible to add expenses and view the total amount.
+	"""
 	print("The expense tracker  is running!!!")
 	print("Use commands:")
 	print("  - add <value>- to add expense;")
