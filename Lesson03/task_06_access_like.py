@@ -65,7 +65,8 @@ def test_user_properties() -> None:
 	user = User("Maksym", "Trykoz", "example@max.koz")
 	assert_that(user.first_name == "Maksym",
 	            f"Error: unexpected first name: {user.first_name}").is_true()
-	
+
+
 def test_user_properties_change() -> None:
 	user = User("Maksym", "Trykoz", "example@max.koz")
 	
