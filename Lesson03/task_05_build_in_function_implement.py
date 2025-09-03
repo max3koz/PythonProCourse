@@ -1,7 +1,7 @@
-from typing import Iterator
-
 import pytest
+
 from assertpy import assert_that
+from typing import Iterator
 
 
 class CustomList:
