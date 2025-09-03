@@ -58,13 +58,13 @@ class BinaryNumber:
 
 @pytest.mark.parametrize("binary_operation, expected_result", [
 	pytest.param("and", 0b1000,
-	             id="TC_01: Verify that Binary ADD operation run as expected"),
+	             id="TC_04_01: Verify that Binary ADD operation run as expected"),
 	pytest.param("or", 0b1110,
-	             id="TC_02: Verify that Binary OR operation run as expected"),
+	             id="TC_04_02: Verify that Binary OR operation run as expected"),
 	pytest.param("xor", 0b0110,
-	             id="TC_03:Verify that Binary XOR operation run as expected"),
+	             id="TC_04_03:Verify that Binary XOR operation run as expected"),
 	pytest.param("inversion", 0b0101,
-	             id="TC_04:Verify that Binary inversion operation run as expected"),
+	             id="TC_04_04:Verify that Binary inversion operation run as expected"),
 ])
 def test_binary_operation(binary_operation, expected_result) -> None:
 	"""
