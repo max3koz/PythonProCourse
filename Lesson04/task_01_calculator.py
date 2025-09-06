@@ -46,7 +46,7 @@ class SmartNumber:
 	
 	def __str__(self) -> str:
 		"""
-		Returns a normalized string representation of the number.
+		Returns a string representation of the number.
 		:return: String with the result
 		"""
 		return str(self.value.normalize())
