@@ -56,11 +56,11 @@ def simulate_game_event(event_type: str) -> None:
 
 @pytest.mark.parametrize("test_event, expected_result", [
 	pytest.param("levelUp", "Great!! You get the new rate: 5",
-	             id="Test_03_01: get 'level up' exception."),
+	             id="Test_04_01: get 'level up' exception."),
 	pytest.param("death", "Car was crashed. Issue: collision!!!",
-	             id="Test_03_02: get 'death' exception."),
+	             id="Test_04_02: get 'death' exception."),
 	pytest.param("other", "Other issue: {'message': 'Unexpected exception'}!!!",
-	             id="Test_03_03: get 'other' exception.")
+	             id="Test_04_03: get 'other' exception.")
 ])
 def test_get_exception(test_event, expected_result):
 	event_log = ""
