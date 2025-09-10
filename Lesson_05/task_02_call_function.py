@@ -9,6 +9,10 @@ class Calculator:
 		return a - b
 
 def call_function(obj: Any, method_name: str, *args: Any) -> Any:
+	"""
+	A function that takes an object, a method name as a string, and arbitrary
+	arguments for that method, and returns the result of the method's operation.
+	"""
 	method = getattr(obj, method_name)
 	if callable(method):
 		return method(*args)
