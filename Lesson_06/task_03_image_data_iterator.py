@@ -50,8 +50,8 @@ def save_metadata_to_csv(folder: str, output_csv: str) -> None:
 	Save image metadata to CSV file
 	"""
 	iterator = ImageMetadataIterator(folder)
-	with open(output_csv, "w", newline="", encoding="utf-8") as f:
-		writer = csv.DictWriter(f, fieldnames=["filename", "format", "size",
+	with open(output_csv, "w", newline="", encoding="utf-8") as file:
+		writer = csv.DictWriter(file, fieldnames=["filename", "format", "size",
 		                                       "mode", "error"])
 		writer.writeheader()
 		for data in iterator:
