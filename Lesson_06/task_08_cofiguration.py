@@ -53,7 +53,8 @@ class JsonConfigManager:
 			self.config[key] = [value]
 			print(f"DONE: Created new list '{key}' with elements: {value}")
 		elif not isinstance(self.config[key], list):
-			print(f"WARNING: The '{key}' parameter exists, but it is NOT the list.")
+			print(
+				f"WARNING: The '{key}' parameter exists, but it is NOT the list.")
 		elif value in self.config[key]:
 			print(
 				f"WARNING:  The '{value}' value exists in the '{key}' parameter. "
