@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<products>
+    <product>
+        <name>Milk</name>
+        <price>25</price>
+        <quantity>20</quantity>
+    </product>
+    <product>
+        <name>Bread</name>
+        <price>10</price>
+        <quantity>100</quantity>
+    </product>
+</products>

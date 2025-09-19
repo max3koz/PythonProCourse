@@ -1,0 +1,14 @@
+[
+    {
+        "Title": "Книга 1",
+        "Author": "Автор 1",
+        "year": 2015,
+        "availability": true
+    },
+    {
+        "Title": "Книга 2",
+        "Author": "Автор 2",
+        "year": 2018,
+        "availability": true
+    }
+]
