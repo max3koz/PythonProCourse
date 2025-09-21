@@ -1,0 +1,1 @@
+from Lesson_08.task_02_unittest_mocking import web_service
