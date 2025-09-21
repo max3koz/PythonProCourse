@@ -1,6 +1,6 @@
 import unittest
 
-from Lesson_08.task_01_string_processor.string_processor import StringProcessor
+from .string_processor import StringProcessor
 
 
 class TestStringProcessorRevers(unittest.TestCase):
@@ -11,7 +11,7 @@ class TestStringProcessorRevers(unittest.TestCase):
 		self.assertEqual(StringProcessor.reverse_string("123!abc"), "cba!321")
 	
 	@unittest.skip(
-		"Known issue with empty string - will be fixed later")
+	"Known issue with empty string - will be fixed later")
 	def test_reverse_string_empty(self):
 		self.assertEqual(StringProcessor.reverse_string(""), "")
 
