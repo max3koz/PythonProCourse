@@ -1,0 +1,1 @@
+from Lesson_08.task_07_file_processor import file_processor
