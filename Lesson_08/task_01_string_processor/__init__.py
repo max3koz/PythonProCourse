@@ -1,0 +1,1 @@
+from Lesson_08.task_01_string_processor import string_processor
