@@ -1,0 +1,10 @@
+Result of run - mypy:
+(.venv) mtrykoz@mtrykoz-VirtualBox:~/PycharmProjects/PythonProject/PythonProCourse$ mypy Lesson_09
+Lesson_09/task_07_user_data_base.py:61: note: By default the bodies of untyped functions are not checked, consider using --check-untyped-defs  [annotation-unchecked]
+Lesson_09/task_07_user_data_base.py:77: note: By default the bodies of untyped functions are not checked, consider using --check-untyped-defs  [annotation-unchecked]
+Lesson_09/task_07_user_data_base.py:78: note: By default the bodies of untyped functions are not checked, consider using --check-untyped-defs  [annotation-unchecked]
+Success: no issues found in 11 source files
+
+Resultt og run - myright:
+(.venv) mtrykoz@mtrykoz-VirtualBox:~/PycharmProjects/PythonProject/PythonProCourse$ pyright Lesson_09
+0 errors, 0 warnings, 0 informations

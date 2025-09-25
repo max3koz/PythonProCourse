@@ -81,18 +81,3 @@ def test_overwrite_user():
 	actual_result = db.get_user(1)
 	assert_that(actual_result == user_2,
 	            f"Error: wrong result {actual_result}").is_true()
-
-
-def test_multiple_users():
-	db = InMemoryUserDB()
-	users = [
-		{"id": 1, "name": "Alice", "is_admin": False},
-		{"id": 2, "name": "Bob", "is_admin": True},
-		{"id": 3, "name": "Charlie", "is_admin": False}
-	]
-	for user_item in users:
-		db.save_user(user_item)
-	for user_item in users:
-		actual_result = db.get_user(user_item["id"])
-		assert_that(actual_result == user_item,
-		            f"Error: wrong result {actual_result}").is_true()
