@@ -7,7 +7,7 @@ from assertpy import assert_that
 
 def find_phone_numbers(text: str) -> List[str]:
 	"""
-	The function Extracts all phone numbers from the given text.
+	The function extracts all phone numbers from the given text.
 	Supported formats: (123) 456-7890, 123-456-7890, 123.456.7890, 1234567890
 	Parameters:
 	- text (str): The input text to search for phone numbers.
@@ -35,5 +35,5 @@ def find_phone_numbers(text: str) -> List[str]:
 ])
 def test_find_phone_numbers(text, expected_result):
 	(assert_that(find_phone_numbers(text),
-	             f"Error: unexpected result {expected_result}").
+	             f"Error: unexpected result {find_phone_numbers(text)}").
 	 is_equal_to(expected_result))
