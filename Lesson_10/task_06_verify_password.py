@@ -32,17 +32,17 @@ def is_strong_password(password: str) -> bool:
 
 
 @pytest.mark.parametrize("password, expected_result", [
-	pytest.param("Abc123$%", True, id="TC_05_01: valid password"),
-	pytest.param("A1b$", False, id="TC_05_02: less 8 simbols"),
-	pytest.param("Abcdef$%", False, id="TC_05_03: password without numbers"),
+	pytest.param("Abc123$%", True, id="TC_06_01: valid password"),
+	pytest.param("A1b$", False, id="TC_06_02: less 8 simbols"),
+	pytest.param("Abcdef$%", False, id="TC_06_03: password without numbers"),
 	pytest.param("abc123$%", False,
-	             id="TC_05_04: password without upper letter"),
+	             id="TC_06_04: password without upper letter"),
 	pytest.param("ABC123$%", False,
-	             id="TC_05_05: password without little letter"),
+	             id="TC_06_05: password without little letter"),
 	pytest.param("Abc12345", False,
-	             id="TC_05_06: password without special characters"),
-	pytest.param("12345678", False, id="TC_05_07: password with number only"),
-	pytest.param("", False, id="TC_05_08: empty string"),
+	             id="TC_06_06: password without special characters"),
+	pytest.param("12345678", False, id="TC_06_07: password with number only"),
+	pytest.param("", False, id="TC_06_08: empty string"),
 ])
 def test_is_strong_password(password, expected_result):
 	assert_that(is_strong_password(password) == expected_result,
