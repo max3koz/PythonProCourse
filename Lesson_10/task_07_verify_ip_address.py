@@ -7,13 +7,9 @@ from assertpy import assert_that
 
 def extract_ipv4_addresses(text: str) -> List[str]:
 	"""
-	Extracts all valid IPv4 addresses from the given text.
-
-	An IPv4 address consists of four numbers (0–255) separated by dots.
-
+	The function extracts all valid IPv4 addresses from the given text.
 	Parameters:
 	- text (str): The input text to search for IPv4 addresses.
-
 	Returns:
 	- List[str]: A list of valid IPv4 addresses found in the text.
 	"""
