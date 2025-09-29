@@ -12,7 +12,6 @@ def is_valid_mac_address(mac: str) -> bool:
     Returns:
         bool: True if the MAC address is valid, False otherwise.
     """
-    mac = mac.strip()
     pattern = re.compile(r'^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$')
     return bool(pattern.fullmatch(mac))
 
