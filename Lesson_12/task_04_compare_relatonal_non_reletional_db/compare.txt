@@ -1,0 +1,68 @@
+Модель даних: подія користувача
+================================
+{
+  "event_id": "UUID",
+  "user_id": "user123",
+  "event_type": "login",
+  "timestamp": "2025-10-04T20:00:00Z",
+  "metadata": {"ip": "127.0.0.1"}
+}
+
+CRUD operation PostgreSQL
+==========================
+
+-- CREATE
+INSERT INTO event_logs (event_id, user_id, event_type, timestamp, metadata)
+VALUES ('...', 'user123', 'login', NOW(), '{"ip": "127.0.0.1"}');
+
+-- READ
+SELECT * FROM event_logs WHERE event_type = 'login' AND timestamp >= NOW() - INTERVAL '1 day';
+
+-- UPDATE
+UPDATE event_logs SET metadata = '{"ip": "127.0.0.1", "device": "mobile"}' WHERE event_id = '...';
+
+-- DELETE
+DELETE FROM event_logs WHERE timestamp < NOW() - INTERVAL '7 days';
+
+--------------------------------------------------------------------------------------------------
+CRUD operation MongoDB
+=======================
+# CREATE
+db.event_logs.insert_one({
+    "event_id": str(uuid4()),
+    "user_id": "user123",
+    "event_type": "login",
+    "timestamp": datetime.utcnow(),
+    "metadata": {"ip": "127.0.0.1"}
+})
+
+# READ
+db.event_logs.find({
+    "event_type": "login",
+    "timestamp": {"$gte": datetime.utcnow() - timedelta(days=1)}
+})
+
+# UPDATE
+db.event_logs.update_one(
+    {"event_id": "..."},
+    {"$set": {"metadata": {"ip": "127.0.0.1", "device": "mobile"}}}
+)
+
+# DELETE
+db.event_logs.delete_many({"timestamp": {"$lt": datetime.utcnow() - timedelta(days=7)}})
+
+--------------------------------------------------------------------------------------------------
+PostgreSQL:
+============
+1. Дані мають чітку структуру та зв’язки;
+2. Потрібні складні запити, транзакції, звітність
+3. Важлива цілісність та типізація
+
+MongoDB:
+=========
+1. Дані змінюються динамічно (наприклад, логування)
+2. Високе навантаження, масштабування
+3. Гнучка схема, швидкий розвиток продукту
+
+--------------------------------------------------------------------------------------------------
+
