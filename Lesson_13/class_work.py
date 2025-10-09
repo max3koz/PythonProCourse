@@ -19,14 +19,14 @@ chunk_size = len(words) // num_threads
 threads = []
 
 for i in range(num_threads):
-    start = i * chunk_size
-    end = len(words) if i == num_threads - 1 else (i + 1) * chunk_size
-    chunk = words[start:end]
-    t = threading.Thread(target=count_words, args=(chunk,))
-    threads.append(t)
-    t.start()
+	start = i * chunk_size
+	end = len(words) if i == num_threads - 1 else (i + 1) * chunk_size
+	chunk = words[start:end]
+	thread = threading.Thread(target=count_words, args=(chunk,))
+	threads.append(t)
+	thread.start()
 
-for t in threads:
-    t.join()
+for thread in threads:
+	thread.join()
 
 print(f"Загальна кількість слів: {total_words}")
