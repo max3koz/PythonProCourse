@@ -21,10 +21,7 @@ async def download_image(url: str, filename: str) -> None:
 
 
 async def main() -> None:
-	"""
-	Створює список завдань для одночасного завантаження зображень.
-	Використовує asyncio.gather для паралельного виконання.
-	"""
+	"""Creates a list of tasks to load images simultaneously."""
 	image_sources: List[tuple[str, str]] = [
 		("https://yavuzceliker.github.io/sample-images/image-1021.jpg",
 		 "image1.jpg"),
