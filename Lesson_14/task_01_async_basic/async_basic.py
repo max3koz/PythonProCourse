@@ -21,8 +21,6 @@ async def main(urls: List[str]) -> None:
 	tasks: List[asyncio.Task] = [asyncio.create_task(download_page(url)) for url
 	                             in urls]
 	await asyncio.gather(*tasks)
-	# for task_item in asyncio.as_completed(tasks):
-	# 	await task_item
 
 
 test_urls = [

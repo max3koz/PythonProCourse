@@ -38,7 +38,7 @@ async def consumer(queue: asyncio.Queue, name: str) -> None:
 		queue.task_done()
 
 
-async def main(num_consumers = 2) -> None:
+async def main(num_consumers=2) -> None:
 	"""
 	The function launches a producer and multiple consumers simultaneously
 	to process tasks from the queue.
