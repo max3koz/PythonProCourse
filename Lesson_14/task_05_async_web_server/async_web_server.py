@@ -40,5 +40,6 @@ def main() -> None:
 	app = create_app()
 	web.run_app(app, port=8081)
 
+
 if __name__ == "__main__":
 	main()
