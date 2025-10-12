@@ -36,6 +36,7 @@ def create_app() -> web.Application:
 
 
 def main() -> None:
+	"""The main function initializes and starts an asynchronous web server."""
 	port = int(sys.argv[1]) if len(sys.argv) > 1 else 8080
 	app = create_app()
 	web.run_app(app, port=8081)
