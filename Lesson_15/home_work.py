@@ -211,29 +211,30 @@ def save_to_csv(data: List[Dict[str, str]], filename: str) -> pd.DataFrame:
 	except Exception as e:
 		print(f"ERROR: Failed to save CSV file: {e}")
 		return pd.DataFrame()
-  
+
 
 def print_news_stats(df: pd.DataFrame) -> None:
-    """
-    The function displays the number of news items for each date
-    in a table format.
-    Parameters:
-    	- df : pd.DataFrame A news table containing a 'date' column.
-    """
-    if "date" not in df.columns or df.empty:
-        print("!!! WARNING: No data for statistics !!!")
-        return
+	"""
+	The function displays the number of news items for each date
+	in a table format.
+	Parameters:
+		- df : pd.DataFrame A news table containing a 'date' column.
+	"""
+	if "date" not in df.columns or df.empty:
+		print("!!! WARNING: No data for statistics !!!")
+		return
+	
+	stats_df = (
+		df["date"]
+		.value_counts()
+		.sort_index()
+		.reset_index()
+		.rename(columns={"index": "date", "date": "date"})
+	)
+	
+	print("\nNumber of news items by date:")
+	print(stats_df.to_string(index=False))
 
-    stats_df = (
-        df["date"]
-        .value_counts()
-        .sort_index()
-        .reset_index()
-        .rename(columns={"index": "date", "date": "date"})
-    )
-
-    print("\nNumber of news items by date:")
-    print(stats_df.to_string(index=False))
 
 def main():
 	"""
