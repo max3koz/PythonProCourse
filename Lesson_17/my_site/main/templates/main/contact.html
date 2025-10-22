@@ -1,0 +1,12 @@
+{% extends 'main/base.html' %}
+{% block title %}*** Контакти ***{% endblock %}
+{% block content %}
+<h2 class="text-info">Контактна інформація</h2>
+<ul class="list-group">
+    <li class="list-group-item">Адреса: {{ address|default:"Немає даних" }}</li>
+    <li class="list-group-item">Телефон: {{ phone|default:"Немає даних" }}</li>
+    <li class="list-group-item">Email: {{ email|default:"Немає email" }}</li>
+    <li class="list-group-item">Час праці:
+        {{ work_time|default:"Немає інформації"|safe }}</li>
+</ul>
+{% endblock %}
