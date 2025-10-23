@@ -1,0 +1,10 @@
+{% extends 'app_1/base.html' %}
+{% block title %}Contacts{% endblock %}
+{% block content %}
+<h2 class="text-info">Contacts</h2>
+<ul class="list-group">
+    <li class="list-group-item">Email: {{ email }}</li>
+    <li class="list-group-item">Phone: {{ phone }}</li>
+    <li class="list-group-item">Адреса: {{ address }}</li>
+</ul>
+{% endblock %}

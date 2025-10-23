@@ -1,0 +1,7 @@
+{% extends 'main/base.html' %}
+{% block title %}*** Про нас ***{% endblock %}
+{% block content %}
+<h2 class="text-success">Про компанію</h2>
+<p>{{ company_description|truncatechars:100 }}</p>
+<p>Оновлено: {{ last_updated|date:"d.m.Y" }}</p>
+{% endblock %}
