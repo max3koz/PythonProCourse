@@ -10,7 +10,6 @@ from django.utils import timezone
 
 from .models import Category, Ad, Comment, UserProfile
 
-# Django setup for standalone test execution
 os.environ.setdefault('DJANGO_SETTINGS_MODULE',
                       'bulletin_board.settings')
 django.setup()
