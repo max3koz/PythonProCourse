@@ -6,5 +6,5 @@ class BoardConfig(AppConfig):
 	name = 'board'
 
 
-def ready(self):
-	pass
+	def ready(self) -> None:
+		import board.signals

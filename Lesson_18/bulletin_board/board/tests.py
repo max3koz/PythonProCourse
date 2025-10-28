@@ -3,6 +3,7 @@ from datetime import timedelta
 
 import django
 import pytest
+from django.core import mail
 from django.contrib.auth.models import User
 from django.db.models import Count
 from django.utils import timezone
@@ -150,6 +151,26 @@ def test_signal_deactivates_expired_ad(user: User, category: Category) -> None:
 
 
 @pytest.mark.django_db
+def test_signal_does_not_deactivate_recent_ad() -> None:
+    """Verifies that ads newer than 30 days remain active."""
+    user: User = User.objects.create_user(username='maksym', password='12345')
+    category: Category = Category.objects.create(name='Test',
+                                                 description='Test category')
+
+    ad: Ad = Ad.objects.create(
+        title='Recent Ad',
+        description='Fresh ad',
+        price=100,
+        user=user,
+        category=category
+    )
+    ad.created_at = timezone.now() - timedelta(days=10)
+    ad.save()
+
+    ad.refresh_from_db()
+    assert ad.is_active
+
+@pytest.mark.django_db
 def test_recent_ads(user: User, category: Category) -> None:
 	"""Verifies that only ads created within the last 30 days are returned."""
 	ad_recent = Ad.objects.create(
@@ -233,3 +254,28 @@ def test_user_ads(user: User, category: Category) -> None:
 	
 	user_ads = Ad.objects.filter(user=user)
 	assert user_ads.count() == 3
+	
+	
+@pytest.mark.django_db
+def test_email_sent_on_ad_creation() -> None:
+    """Verifies that an email is sent to the user when a new ad is created."""
+    user: User = User.objects.create_user(
+        username='maksym',
+        password='12345',
+        email='max3koz@gmail.com'
+    )
+    category: Category = Category.objects.create(name='Test',
+                                                 description='Test category')
+
+    Ad.objects.create(
+        title='New Ad',
+        description='Ad description',
+        price=100,
+        user=user,
+        category=category
+    )
+
+    assert len(mail.outbox) == 1
+    assert mail.outbox[0].subject == 'Your ad has been posted!'
+    assert 'New Ad' in mail.outbox[0].body
+    assert mail.outbox[0].to == ['max3koz@gmail.com']
