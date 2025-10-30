@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Профіль користувача{% endblock %}
+{% block content %}
+<h2>{{ profile.user.username }}</h2>
+{% if profile.avatar %}
+<img src="{{ profile.avatar.url }}" class="img-thumbnail mb-3" width="150"
+     height="150">
+{% endif %}
+<ul class="list-group">
+    <li class="list-group-item"><strong>Email:</strong> {{ profile.user.email }}
+    </li>
+    <li class="list-group-item"><strong>Місто:</strong> {{ profile.location }}
+    </li>
+    <li class="list-group-item"><strong>Дата народження:</strong> {{
+        profile.birth_date }}
+    </li>
+    <li class="list-group-item"><strong>Біографія:</strong> {{ profile.bio }}
+    </li>
+</ul>
+{% endblock %}

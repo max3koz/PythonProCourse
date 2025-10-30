@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Видалити акаунт{% endblock %}
+
+{% block content %}
+<h2>Видалення акаунта</h2>
+<p>Ви впевнені, що хочете видалити свій акаунт? Цю дію не можна скасувати.</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Так, видалити</button>
+    <a href="{% url 'profile' %}" class="btn btn-secondary">Скасувати</a>
+</form>
+{% endblock %}
