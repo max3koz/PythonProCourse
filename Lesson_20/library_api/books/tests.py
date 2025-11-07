@@ -28,7 +28,7 @@ def admin() -> User:
 def client() -> APIClient:
 	"""DRF API client"""
 	return APIClient()
-
+ 
 
 @pytest.mark.django_db
 def test_create_book_authenticated(client: APIClient, user: User) -> None:
