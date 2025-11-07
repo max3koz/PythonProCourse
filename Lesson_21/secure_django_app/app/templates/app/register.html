@@ -1,0 +1,16 @@
+<!-- app/templates/app/register.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Реєстрація</title>
+</head>
+<body>
+<h2>Реєстрація користувача</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Зареєструватися</button>
+</form>
+<p>Вже маєте акаунт? <a href="{% url 'login' %}">Увійти</a></p>
+</body>
+</html>
