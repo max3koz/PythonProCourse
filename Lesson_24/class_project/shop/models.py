@@ -59,7 +59,7 @@ class Sale(models.Model):
 	                                               on_delete=models.CASCADE,
 	                                               related_name="sales")
 	quantity: models.PositiveIntegerField = models.PositiveIntegerField(
-		_("Кількість"),	default=1)
+		_("Кількість"), default=1)
 	total_price: models.DecimalField = models.DecimalField(_("Сума"),
 	                                                       max_digits=12,
 	                                                       decimal_places=2)

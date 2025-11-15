@@ -1,20 +1,27 @@
 <!doctype html>
 <html lang="uk">
-<head><meta charset="utf-8"><title>Товари</title></head>
+<head>
+    <meta charset="utf-8">
+    <title>Товари</title></head>
 <body>
-  <h1>Товари</h1>
-  <p>Ваші відвідування: {{ visits }}</p>
-  <table border="1" cellpadding="6">
-    <tr><th>Назва</th><th>Категорія</th><th>Ціна</th><th>Дія</th></tr>
+<h1>Товари</h1>
+<p>Ваші відвідування: {{ visits }}</p>
+<table border="1" cellpadding="6">
+    <tr>
+        <th>Назва</th>
+        <th>Категорія</th>
+        <th>Ціна</th>
+        <th>Дія</th>
+    </tr>
     {% for p in products %}
-      <tr>
+    <tr>
         <td>{{ p.name }}</td>
         <td>{{ p.category.name }}</td>
         <td>{{ p.price }}</td>
         <td><a href="{% url 'shop:cart-add' p.id %}">Додати в кошик</a></td>
-      </tr>
+    </tr>
     {% endfor %}
-  </table>
-  <p><a href="{% url 'shop:cart-view' %}">Перейти до кошика</a></p>
+</table>
+<p><a href="{% url 'shop:cart-view' %}">Перейти до кошика</a></p>
 </body>
 </html>

@@ -1,27 +1,37 @@
 <!doctype html>
 <html lang="uk">
-<head><meta charset="utf-8"><title>Кошик</title></head>
+<head>
+    <meta charset="utf-8">
+    <title>Кошик</title></head>
 <body>
-  <h1>Кошик</h1>
-  {% if items %}
-    <table border="1" cellpadding="6">
-      <tr><th>Товар</th><th>Категорія</th><th>Ціна</th><th>К-сть</th><th>Сума</th><th>Дія</th></tr>
-      {% for row in items %}
-        <tr>
-          <td>{{ row.product.name }}</td>
-          <td>{{ row.product.category.name }}</td>
-          <td>{{ row.product.price }}</td>
-          <td>{{ row.qty }}</td>
-          <td>{{ row.subtotal }}</td>
-          <td><a href="{% url 'shop:cart-remove' row.product.id %}">Видалити</a></td>
-        </tr>
-      {% endfor %}
-    </table>
-    <p><strong>Всього: {{ total }}</strong></p>
-    <p><a href="{% url 'shop:cart-clear' %}">Очистити кошик</a></p>
-  {% else %}
-    <p>Кошик порожній.</p>
-  {% endif %}
-  <p><a href="{% url 'shop:product-list' %}">До товарів</a></p>
+<h1>Кошик</h1>
+{% if items %}
+<table border="1" cellpadding="6">
+    <tr>
+        <th>Товар</th>
+        <th>Категорія</th>
+        <th>Ціна</th>
+        <th>К-сть</th>
+        <th>Сума</th>
+        <th>Дія</th>
+    </tr>
+    {% for row in items %}
+    <tr>
+        <td>{{ row.product.name }}</td>
+        <td>{{ row.product.category.name }}</td>
+        <td>{{ row.product.price }}</td>
+        <td>{{ row.qty }}</td>
+        <td>{{ row.subtotal }}</td>
+        <td><a href="{% url 'shop:cart-remove' row.product.id %}">Видалити</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<p><strong>Всього: {{ total }}</strong></p>
+<p><a href="{% url 'shop:cart-clear' %}">Очистити кошик</a></p>
+{% else %}
+<p>Кошик порожній.</p>
+{% endif %}
+<p><a href="{% url 'shop:product-list' %}">До товарів</a></p>
 </body>
 </html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="utf-8">
+    <title>Продуктивність</title></head>
+<body>
+<h1>{{ optimized|yesno:"Оптимізовано,Без оптимізації" }}</h1>
+<p>Час виконання: {{ elapsed }} сек.</p>
+<ul>
+    {% for row in data %}
+    <li>
+        <strong>{{ row.book.title }}</strong> — {{ row.author.name }} (відгуків:
+        {{ row.reviews|length }})
+    </li>
+    {% endfor %}
+</ul>
+</body>
+</html>

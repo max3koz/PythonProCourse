@@ -1,6 +1,8 @@
 from __future__ import annotations
+
 from django.db.models import QuerySet
 from shop.models import Product
+
 
 def optimized_products_qs() -> QuerySet[Product]:
 	"""

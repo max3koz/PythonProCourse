@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="utf-8">
+    <title>Привітання</title></head>
+<body>
+<h1>Привіт, {{ name }}, вам {{ age }} років</h1>
+<form action="{% url 'accounts:logout' %}" method="post">{% csrf_token %}
+    <button type="submit">Вийти</button>
+</form>
+</body>
+</html>

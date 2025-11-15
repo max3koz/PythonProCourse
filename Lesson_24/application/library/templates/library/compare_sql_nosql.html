@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="utf-8">
+    <title>SQL vs NoSQL</title></head>
+<body>
+<h1>Порівняння продуктивності SQL та NoSQL</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Додати тестову книгу у NoSQL</button>
+</form>
+
+<table border="1">
+    <tr>
+        <th>Операція</th>
+        <th>Кількість книг ≥ {{ threshold }} відгуків</th>
+        <th>Час виконання (сек)</th>
+    </tr>
+    <tr>
+        <td>SQL</td>
+        <td>{{ sql_count }}</td>
+        <td>{{ sql_time|floatformat:6 }}</td>
+    </tr>
+    <tr>
+        <td>NoSQL</td>
+        <td>{{ nosql_count }}</td>
+        <td>{{ nosql_time|floatformat:6 }}</td>
+    </tr>
+</table>
+</body>
+</html>

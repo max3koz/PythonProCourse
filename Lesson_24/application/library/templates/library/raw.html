@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="utf-8">
+    <title>Raw SQL</title>
+</head>
+<body>
+<h1>Автори з книгами, що мають більше відгуків ніж поріг</h1>
+
+<table border="1">
+    <tr>
+        <th>Загальна кількість книг</th>
+        <th>Кількість книг з ≥ {{ threshold }} відгуками</th>
+    </tr>
+    <tr>
+        <td>{{ total_books }}</td>
+        <td>{{ filtered_books_count }}</td>
+    </tr>
+</table>
+
+<h2>Список авторів</h2>
+<table border="1">
+    <tr>
+        <th>ID автора</th>
+        <th>Ім’я автора</th>
+        <th>Кількість відгуків</th>
+    </tr>
+    {% for a in authors %}
+    <tr>
+        <td>{{ a.id }}</td>
+        <td>{{ a.name }}</td>
+        <td>{{ a.review_count }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="3">Немає авторів з таким порогом</td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="utf-8">
+    <title>Книги</title></head>
+<body>
+<h1>Список книг</h1>
+<ul>
+    {% for b in books %}
+    <li><strong>{{ b.title }}</strong> — {{ b.author__name }} (відгуків: {{
+        b.review_count }})
+    </li>
+    {% endfor %}
+</ul>
+</body>
+</html>

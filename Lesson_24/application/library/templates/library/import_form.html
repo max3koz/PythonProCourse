@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="utf-8">
+    <title>Імпорт CSV</title></head>
+<body>
+<h1>Імпорт CSV</h1>
+<form method="post">{% csrf_token %}
+    <label>Шлях до CSV: <input type="text" name="csv_path" required></label><br>
+    <label>Email: <input type="email" name="email" required></label><br>
+    <button type="submit">Запустити імпорт</button>
+</form>
+</body>
+</html>

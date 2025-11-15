@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="utf-8">
+    <title>NoSQL документи</title></head>
+<body>
+<h1>Документи з NoSQL</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Додати тестову книгу у NoSQL</button>
+</form>
+
+<ul>
+    {% for d in nosql_docs %}
+    <li>{{ d.title }} — {{ d.author }} ({{ d.year }})</li>
+    {% empty %}
+    <li>Немає документів у NoSQL</li>
+    {% endfor %}
+</ul>
+</body>
+</html>

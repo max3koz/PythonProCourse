@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="utf-8">
+    <title>Агрегації</title>
+    <style>
+        table { border-collapse: collapse; margin-bottom: 2em; }
+        th, td { border: 1px solid #ccc; padding: 6px 12px; text-align: center; }
+        th { background-color: #f0f0f0; }
+    </style>
+</head>
+<body>
+<h1>Статистика по авторам</h1>
+<table>
+    <tr>
+        <th>Автор</th>
+        <th>Середній рейтинг книг</th>
+        <th>Кількість відгуків</th>
+    </tr>
+    {% for a in authors %}
+    <tr>
+        <td>{{ a.name }}</td>
+        <td>{{ a.avg_book_rating|floatformat:2|default:"немає відгуків" }}</td>
+        <td>{{ a.review_count }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h1>Статистика по книгах</h1>
+<table>
+    <tr>
+        <th>Книга</th>
+        <th>Автор</th>
+        <th>Середній рейтинг</th>
+        <th>Кількість відгуків</th>
+    </tr>
+    {% for b in books %}
+    <tr>
+        <td>{{ b.title }}</td>
+        <td>{{ b.author.name }}</td>
+        <td>{{ b.avg_rating|floatformat:2|default:"немає відгуків" }}</td>
+        <td>{{ b.review_count }}</td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
