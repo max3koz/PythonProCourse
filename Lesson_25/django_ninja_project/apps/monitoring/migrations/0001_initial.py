@@ -5,32 +5,38 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
-    initial = True
-
-    dependencies = [
-    ]
-
-    operations = [
-        migrations.CreateModel(
-            name='Server',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100, unique=True)),
-                ('ip_address', models.GenericIPAddressField(unique=True)),
-                ('status', models.CharField(choices=[('online', 'Online'), ('offline', 'Offline')], default='offline', max_length=10)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Metric',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('cpu_usage', models.FloatField()),
-                ('memory_usage', models.FloatField()),
-                ('load', models.FloatField()),
-                ('timestamp', models.DateTimeField(auto_now_add=True)),
-                ('server', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='metrics', to='monitoring.server')),
-            ],
-        ),
-    ]
+	initial = True
+	
+	dependencies = [
+	]
+	
+	operations = [
+		migrations.CreateModel(
+			name='Server',
+			fields=[
+				('id', models.BigAutoField(auto_created=True, primary_key=True,
+				                           serialize=False, verbose_name='ID')),
+				('name', models.CharField(max_length=100, unique=True)),
+				('ip_address', models.GenericIPAddressField(unique=True)),
+				('status', models.CharField(
+					choices=[('online', 'Online'), ('offline', 'Offline')],
+					default='offline', max_length=10)),
+				('created_at', models.DateTimeField(auto_now_add=True)),
+			],
+		),
+		migrations.CreateModel(
+			name='Metric',
+			fields=[
+				('id', models.BigAutoField(auto_created=True, primary_key=True,
+				                           serialize=False, verbose_name='ID')),
+				('cpu_usage', models.FloatField()),
+				('memory_usage', models.FloatField()),
+				('load', models.FloatField()),
+				('timestamp', models.DateTimeField(auto_now_add=True)),
+				('server',
+				 models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+				                   related_name='metrics',
+				                   to='monitoring.server')),
+			],
+		),
+	]

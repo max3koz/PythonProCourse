@@ -19,6 +19,7 @@ def ensure_auth(request: HttpRequest) -> None:
 	if not request.user.is_authenticated:
 		raise PermissionDenied("Authentication required")
 
+
 # ------------------ Task ------------------
 @router.get("/", response=List[TaskOut])
 def list_tasks(request: HttpRequest, status: Optional[str] = None,

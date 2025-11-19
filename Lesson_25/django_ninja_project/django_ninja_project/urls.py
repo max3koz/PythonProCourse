@@ -15,18 +15,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from apps.accounts.api import auth_router
+from apps.blog.api import blog_router
+from apps.library.api import library_router
+from apps.monitoring.api import monitoring_router
+from apps.movies.api import movies_router
 from apps.shop.api import shop_router
 from apps.tasks.api import router as tasks_router
-from apps.movies.api import movies_router
-from apps.blog.api import blog_router
-from apps.monitoring.api import monitoring_router
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.shortcuts import redirect
 from django.urls import path
 from ninja import NinjaAPI
-
-
 
 api = NinjaAPI(title="Multi-API Project", version="1.0")
 
@@ -47,6 +46,10 @@ api.add_router("/blog", blog_router)
 
 # Monitoring API
 api.add_router("/monitoring", monitoring_router)
+
+# Library API
+api.add_router("/library", library_router)
+
 
 def root_redirect(request):
 	return redirect("/api/docs")

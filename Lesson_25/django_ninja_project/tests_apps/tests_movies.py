@@ -80,7 +80,7 @@ class TestMoviesAPIWithAuth:
 		           "description": "description",
 		           "release_date": str(date(2014, 11, 7)),
 		           "rating": 9.0,
-		           "genre_ids": [genre.id],}
+		           "genre_ids": [genre.id], }
 		
 		logger.info("Step 2: Sending POST request to create movie...")
 		response = session.post(url, json=payload)

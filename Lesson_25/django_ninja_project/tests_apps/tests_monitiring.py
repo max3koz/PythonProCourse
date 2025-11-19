@@ -24,9 +24,7 @@ class TestMonitoringAPI:
 	
 	@pytest.fixture
 	def session(self, live_server, user):
-		"""
-		Fixture: creates an authenticated session via API login.
-		"""
+		"""Fixture: creates an authenticated session via API login."""
 		logger.info("Precondition step 1: Logging in user via API...")
 		s = requests.Session()
 		login_url = f"{live_server.url}/api/accounts/login"
@@ -137,7 +135,8 @@ class TestMonitoringAPI:
 		logger.info("Step 2: sending DELETE request to remove server")
 		response = session.delete(url)
 		
-		logger.info("Step 3: Checking response doesn't contain deleted servers.")
+		logger.info(
+			"Step 3: Checking response doesn't contain deleted servers.")
 		assert_that(response.status_code).is_equal_to(200)
 		assert_that(Server.objects.filter(id=server.id).exists()).is_false()
 	
@@ -197,7 +196,7 @@ class TestMonitoringAPI:
 		"""Verify that im possible to get list metrics for non-existent server."""
 		logger.info("Step 1: create the metric data list")
 		url = f"{live_server.url}/api/monitoring/metrics/9999"
-
+		
 		logger.info("Step 2: sending GET request to list metrics")
 		response = session.get(url)
 		

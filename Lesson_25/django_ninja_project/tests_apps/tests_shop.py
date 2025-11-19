@@ -90,7 +90,8 @@ class TestShopAPIWithAuth:
 		Product.objects.create(name="Tablet", description="Android tablet",
 		                       price=300, stock=15)
 		
-		logger.info("Step 2: send GET request and verify that the status code 200")
+		logger.info(
+			"Step 2: send GET request and verify that the status code 200")
 		url = f"{live_server.url}/api/shop/products/"
 		response = session.get(url)
 		assert_that(response.status_code).is_equal_to(200)
@@ -150,7 +151,7 @@ class TestShopAPIWithAuth:
 		                                 description="Mechanical keyboard",
 		                                 price=120, stock=50)
 		CartItem.objects.create(user=user, product=product, quantity=1)
-
+		
 		logger.info("Step 2: create  order")
 		url = f"{live_server.url}/api/shop/orders/"
 		response = session.post(url)
@@ -189,7 +190,7 @@ class TestShopAPIWithAuth:
 		logger.info("Step 2: verify updated order status")
 		order.refresh_from_db()
 		assert_that(order.status).is_equal_to("shipped")
-		
+	
 	def test_update_nonexistent_order_status(self, live_server, session):
 		"""Verify that impossible to update nonexistent order status """
 		logger.info("Step 1: Send PUT requst ")
