@@ -18,6 +18,7 @@ from apps.accounts.api import auth_router
 from apps.shop.api import shop_router
 from apps.tasks.api import router as tasks_router
 from apps.movies.api import movies_router
+from apps.blog.api import blog_router
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.shortcuts import redirect
@@ -40,6 +41,8 @@ api.add_router("/shop/", shop_router)
 # Movies API
 api.add_router("/movies", movies_router)
 
+# Blog API
+api.add_router("/blog", blog_router)
 
 def root_redirect(request):
 	return redirect("/api/docs")
