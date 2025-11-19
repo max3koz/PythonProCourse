@@ -14,6 +14,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from apps.accounts.api import auth_router
+from apps.shop.api import shop_router
+from apps.tasks.api import router as tasks_router
 from apps.tasks.api import router as tasks_router
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
@@ -25,6 +28,12 @@ api = NinjaAPI(title="Multi-API Project", version="1.0")
 
 # Tasks API
 api.add_router("/tasks/", tasks_router)
+
+# Auth API
+api.add_router("/accounts/", auth_router)
+
+# Shop API
+api.add_router("/shop/", shop_router)
 
 
 def root_redirect(request):
