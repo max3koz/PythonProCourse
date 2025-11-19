@@ -17,12 +17,14 @@ Including another URLconf
 from apps.accounts.api import auth_router
 from apps.shop.api import shop_router
 from apps.tasks.api import router as tasks_router
-from apps.tasks.api import router as tasks_router
+from apps.movies.api import movies_router
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.shortcuts import redirect
 from django.urls import path
 from ninja import NinjaAPI
+
+
 
 api = NinjaAPI(title="Multi-API Project", version="1.0")
 
@@ -34,6 +36,9 @@ api.add_router("/accounts/", auth_router)
 
 # Shop API
 api.add_router("/shop/", shop_router)
+
+# Movies API
+api.add_router("/movies", movies_router)
 
 
 def root_redirect(request):

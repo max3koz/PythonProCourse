@@ -37,7 +37,8 @@ INSTALLED_APPS = [
 	'django.contrib.staticfiles',
 	'apps.tasks',
 	'apps.accounts',
-	'apps.shop'
+	'apps.shop',
+	'apps.movies',
 ]
 
 MIDDLEWARE = [
@@ -60,7 +61,6 @@ TEMPLATES = [
 		'OPTIONS': {
 			'context_processors': [
 				'django.template.context_processors.request',
-				'django.contrib.accounts.context_processors.accounts',
 				"django.contrib.auth.context_processors.auth",
 				'django.contrib.messages.context_processors.messages',
 			],
