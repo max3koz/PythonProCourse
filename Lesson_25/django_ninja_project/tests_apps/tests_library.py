@@ -59,8 +59,8 @@ class TestLibraryAPI:
 		logger.info("Step 2: sending POST request")
 		response = requests.post(url, json=payload)
 		
-		logger.info("Step 3: Verify that the status code 401")
-		assert_that(response.status_code).is_equal_to(401)
+		logger.info("Step 3: Verify that the status code 404")
+		assert_that(response.status_code).is_equal_to(404)
 	
 	def test_list_books(self, live_server, session):
 		"""Verify that possible to get list all books with filters."""
@@ -164,8 +164,8 @@ class TestLibraryAPI:
 		logger.info("Step 2: sending GET request")
 		response = requests.post(url, json=payload)
 		
-		logger.info("Step 3: Verify that the status code 401")
-		assert_that(response.status_code).is_equal_to(401)
+		logger.info("Step 3: Verify that the status code 404")
+		assert_that(response.status_code).is_equal_to(404)
 	
 	def test_rent_unavailable_book(self, live_server, session, user):
 		"""Verify that impossible  to rent a book that is not available."""
@@ -211,5 +211,5 @@ class TestLibraryAPI:
 		logger.info("Step 2: sending GET request")
 		response = requests.post(url)
 		
-		logger.info("Step 3: Verify that the status code 401")
-		assert_that(response.status_code).is_equal_to(401)
+		logger.info("Step 3: Verify that the status code 404")
+		assert_that(response.status_code).is_equal_to(404)

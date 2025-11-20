@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from ninja import Router
 from ninja.responses import Response
@@ -10,6 +11,7 @@ movies_router = Router(tags=["movies"])
 
 # ------------------ Genres ------------------
 @movies_router.post("/genres/", response=GenreOut)
+@login_required
 def create_genre(request, payload: GenreIn):
 	"""Create a new genre."""
 	if not request.user.is_authenticated:
@@ -19,6 +21,7 @@ def create_genre(request, payload: GenreIn):
 
 
 @movies_router.get("/genres/", response=list[GenreOut])
+@login_required
 def list_genres(request):
 	"""Retrieve all genres."""
 	return Genre.objects.all()
@@ -26,6 +29,7 @@ def list_genres(request):
 
 # ------------------ Movies ------------------
 @movies_router.post("/", response=MovieOut)
+@login_required
 def create_movie(request, payload: MovieIn):
 	"""Create a new movies."""
 	if not request.user.is_authenticated:
@@ -39,6 +43,7 @@ def create_movie(request, payload: MovieIn):
 
 
 @movies_router.get("/", response=list[MovieOut])
+@login_required
 def list_movies(request, genre: str = None, min_rating: float = None,
                 release_year: int = None, search: str = None):
 	"""Retrieve all movies"""
@@ -55,12 +60,14 @@ def list_movies(request, genre: str = None, min_rating: float = None,
 
 
 @movies_router.get("/{movie_id}", response=MovieOut)
+@login_required
 def get_movie(request, movie_id: int):
 	"""Get the movies by movie ID"""
 	return get_object_or_404(Movie, id=movie_id)
 
 
 @movies_router.put("/{movie_id}", response=MovieOut)
+@login_required
 def update_movie(request, movie_id: int, payload: MovieIn):
 	"""Update movie data"""
 	if not request.user.is_authenticated:
@@ -75,6 +82,7 @@ def update_movie(request, movie_id: int, payload: MovieIn):
 
 
 @movies_router.delete("/{movie_id}")
+@login_required
 def delete_movie(request, movie_id: int):
 	"""Get the movies by movie ID"""
 	if not request.user.is_authenticated:
@@ -86,6 +94,7 @@ def delete_movie(request, movie_id: int):
 
 # ------------------ Reviews ------------------
 @movies_router.post("/reviews/", response=ReviewOut)
+@login_required
 def add_review(request, payload: ReviewIn):
 	"""Add review"""
 	if not request.user.is_authenticated:
@@ -97,6 +106,7 @@ def add_review(request, payload: ReviewIn):
 
 
 @movies_router.get("/reviews/{movie_id}", response=list[ReviewOut])
+@login_required
 def list_reviews(request, movie_id: int):
 	"Retrive list of reviews"
 	movie = get_object_or_404(Movie, id=movie_id)

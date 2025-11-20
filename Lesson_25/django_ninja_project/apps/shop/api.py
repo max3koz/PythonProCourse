@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from ninja import Router
@@ -17,6 +18,7 @@ class OrderStatusIn(Schema):
 # ------------------ Products ------------------
 
 @shop_router.post("/products/", response=ProductOut)
+@login_required
 def create_product(request, payload: ProductIn):
 	"""Create a new product."""
 	product = Product.objects.create(**payload.dict())
@@ -24,18 +26,21 @@ def create_product(request, payload: ProductIn):
 
 
 @shop_router.get("/products/", response=list[ProductOut])
+@login_required
 def list_products(request):
 	"""List all products."""
 	return Product.objects.all()
 
 
 @shop_router.get("/products/{product_id}", response=ProductOut)
+@login_required
 def get_product(request, product_id: int):
 	"""Retrieve a single product by ID."""
 	return get_object_or_404(Product, id=product_id)
 
 
 @shop_router.put("/products/{product_id}", response=ProductOut)
+@login_required
 def update_product(request, product_id: int, payload: ProductIn):
 	"""Update product details."""
 	product = get_object_or_404(Product, id=product_id)
@@ -46,6 +51,7 @@ def update_product(request, product_id: int, payload: ProductIn):
 
 
 @shop_router.delete("/products/{product_id}")
+@login_required
 def delete_product(request, product_id: int):
 	"""Delete a product."""
 	product = get_object_or_404(Product, id=product_id)
@@ -56,6 +62,7 @@ def delete_product(request, product_id: int):
 # ------------------ Cart ------------------
 
 @shop_router.post("/cart/", response=CartItemOut)
+@login_required
 def add_to_cart(request, payload: CartItemIn):
 	"""Add a product to the user's cart."""
 	user = request.user if request.user.is_authenticated else User.objects.first()
@@ -75,6 +82,7 @@ def add_to_cart(request, payload: CartItemIn):
 
 
 @shop_router.delete("/cart/{item_id}")
+@login_required
 def remove_from_cart(request, item_id: int):
 	"""Remove a product from the user's cart."""
 	user = request.user if request.user.is_authenticated else User.objects.first()
@@ -86,6 +94,7 @@ def remove_from_cart(request, item_id: int):
 # ------------------ Orders ------------------
 
 @shop_router.post("/orders/", response=OrderOut)
+@login_required
 def create_order(request):
 	"""Create an order."""
 	user = request.user if request.user.is_authenticated else User.objects.first()
@@ -105,6 +114,7 @@ def create_order(request):
 
 
 @shop_router.put("/orders/{order_id}")
+@login_required
 def update_order_status(request, order_id: int, payload: OrderStatusIn):
 	"""Update the status of an order."""
 	user = request.user if request.user.is_authenticated else User.objects.first()

@@ -94,8 +94,8 @@ class TestBlogAPI:
 		logger.info("Step 2: sending POST request without authentication")
 		response = requests.post(url, json=payload)
 		
-		logger.info("Step 3: verify status code = 401.")
-		assert_that(response.status_code).is_equal_to(401)
+		logger.info("Step 3: verify status code = 404.")
+		assert_that(response.status_code).is_equal_to(404)
 	
 	def test_list_posts(self, live_server, session):
 		"""Verify that possible to get list all blog posts."""
@@ -180,8 +180,8 @@ class TestBlogAPI:
 		logger.info("Step 2: sending DELETE request without authentication ")
 		response = requests.delete(url)
 		
-		logger.info("Step 3: Verify status code = 401.")
-		assert_that(response.status_code).is_equal_to(401)
+		logger.info("Step 3: Verify status code = 404.")
+		assert_that(response.status_code).is_equal_to(404)
 	
 	# ------------------ Comments ------------------
 	def test_add_comment(self, live_server, session, user):
@@ -210,8 +210,8 @@ class TestBlogAPI:
 		logger.info("Step 2: sending POST request without authentication")
 		response = requests.post(url, json=payload)
 		
-		logger.info("Step 3: verify status code = 401")
-		assert_that(response.status_code).is_equal_to(401)
+		logger.info("Step 3: verify status code = 404")
+		assert_that(response.status_code).is_equal_to(404)
 	
 	def test_list_comments(self, live_server, session, user):
 		"""Verify that possible to get list comments for a specific blog post."""

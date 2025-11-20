@@ -1,18 +1,9 @@
 from django.contrib.auth import authenticate, login as django_login
-from ninja import Router, Schema
+from ninja import Router
+
+from .schemas import LoginIn, LoginOut
 
 auth_router = Router(tags=["accounts"])
-
-
-class LoginIn(Schema):
-	username: str
-	password: str
-
-
-class LoginOut(Schema):
-	success: bool
-	token: str | None = None
-	message: str | None = None
 
 
 @auth_router.post("/login", response=LoginOut)

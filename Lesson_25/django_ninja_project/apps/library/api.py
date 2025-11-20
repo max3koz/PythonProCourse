@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from ninja import Router
 from ninja.responses import Response
@@ -10,6 +11,7 @@ library_router = Router(tags=["library"])
 
 # ------------------ Books ------------------
 @library_router.post("/books/", response=BookOut)
+@login_required
 def create_book(request, payload: BookIn) -> Response:
 	"""Create a new book (auth required)."""
 	if not request.user.is_authenticated:
@@ -19,6 +21,7 @@ def create_book(request, payload: BookIn) -> Response:
 
 
 @library_router.get("/books/", response=list[BookOut])
+@login_required
 def list_books(request, title: str = None, author: str = None,
                genre: str = None):
 	"""List all books with optional filters."""
@@ -33,12 +36,14 @@ def list_books(request, title: str = None, author: str = None,
 
 
 @library_router.get("/books/{book_id}", response=BookOut)
+@login_required
 def get_book(request, book_id: int):
 	"""Retrieve a single book by ID."""
 	return get_object_or_404(Book, id=book_id)
 
 
 @library_router.put("/books/{book_id}", response=BookOut)
+@login_required
 def update_book(request, book_id: int, payload: BookIn):
 	"""Update an existing book (auth required)."""
 	if not request.user.is_authenticated:
@@ -51,6 +56,7 @@ def update_book(request, book_id: int, payload: BookIn):
 
 
 @library_router.delete("/books/{book_id}")
+@login_required
 def delete_book(request, book_id: int):
 	"""Delete a book (auth required)."""
 	if not request.user.is_authenticated:
@@ -62,6 +68,7 @@ def delete_book(request, book_id: int):
 
 # ------------------ Rentals ------------------
 @library_router.post("/rentals/", response=RentalOut)
+@login_required
 def rent_book(request, payload: RentalIn) -> Response:
 	"""Rent a book (auth required)."""
 	if not request.user.is_authenticated:
@@ -77,6 +84,7 @@ def rent_book(request, payload: RentalIn) -> Response:
 
 
 @library_router.post("/rentals/{rental_id}/return")
+@login_required
 def return_book(request, rental_id: int):
 	"""Return a rented book (auth required)."""
 	if not request.user.is_authenticated:

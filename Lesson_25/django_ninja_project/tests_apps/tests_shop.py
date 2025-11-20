@@ -64,6 +64,18 @@ class TestShopAPIWithAuth:
 		assert_that(data["name"]).is_equal_to("Laptop")
 		assert_that(Product.objects.filter(name="Laptop").exists()).is_true()
 	
+	def test_create_product_unauthorized(self, live_server):
+		"""Verify that unauthenticated user cannot create product."""
+		logger.info("Step 1: send POST request")
+		url = f"{live_server.url}/api/shop/products/"
+		payload = {"name": "UnauthorizedProduct", "price": 99.99}
+		response = requests.post(url, json=payload)  # без session
+		
+		logger.info("Step 2: verify that new product was not create")
+		assert_that(response.status_code).is_equal_to(422)
+		assert_that(Product.objects.filter(
+			name="UnauthorizedProduct").exists()).is_false()
+	
 	def test_update_product(self, live_server, session):
 		"""Verify that possible to update an existing product via PUT request."""
 		logger.info("Step 1: create dats with updated data for product")
@@ -81,6 +93,21 @@ class TestShopAPIWithAuth:
 		product.refresh_from_db()
 		assert_that(product.name).is_equal_to("New")
 		assert_that(product.price).is_equal_to(200)
+	
+	def test_update_product_unauthorized(self, live_server, django_user_model):
+		"""Verify that unauthenticated user cannot update product."""
+		logger.info("Step 1: send PUT request anf verify status code 201")
+		product = Product.objects.create(name="TestProd", price=10.0)
+		url = f"{live_server.url}/api/shop/products/{product.id}/"
+		payload = {"name": "UpdatedProd", "price": 20.0}
+		
+		logger.info("Step 2: send PUT request")
+		response = requests.put(url, json=payload)
+		
+		logger.info("Step 2: verify that new product was not update")
+		assert_that(response.status_code).is_equal_to(404)
+		product.refresh_from_db()
+		assert_that(product.name).is_equal_to("TestProd")
 	
 	def test_list_products(self, live_server, session):
 		"""Verify that possible to get the list all products via GET request."""
@@ -103,8 +130,20 @@ class TestShopAPIWithAuth:
 	
 	def test_get_nonexistent_product(self, live_server, session):
 		"""Verify that impossible to retrieve a non-existent product."""
+		logger.info("Step 1: send GET request")
 		url = f"{live_server.url}/api/shop/products/9999"
 		response = session.get(url)
+		
+		logger.info("Step3: verify that get products impossible")
+		assert_that(response.status_code).is_equal_to(404)
+	
+	def test_get_products_unauthorized(self, live_server):
+		"""Verify that unauthenticated user cannot list products."""
+		logger.info("Step 1: send GET request")
+		url = f"{live_server.url}/api/shop/products/"
+		response = requests.get(url)  # без session
+		
+		logger.info("Step3: verify that get products impossible")
 		assert_that(response.status_code).is_equal_to(404)
 	
 	def test_delete_product(self, live_server, session):
@@ -119,6 +158,17 @@ class TestShopAPIWithAuth:
 		response = session.delete(url)
 		assert_that(response.status_code).is_equal_to(200)
 		assert_that(Product.objects.filter(id=product.id).exists()).is_false()
+	
+	def test_delete_product_unauthorized(self, live_server):
+		"""Verify that unauthenticated user cannot delete product."""
+		logger.info("Step 1: send DELETE request")
+		product = Product.objects.create(name="ToDelete", price=5.0)
+		url = f"{live_server.url}/api/shop/products/{product.id}/"
+		response = requests.delete(url)
+		
+		logger.info("Step3: verify that delete products impossible")
+		assert_that(response.status_code).is_equal_to(404)
+		assert_that(Product.objects.filter(id=product.id).exists()).is_true()
 	
 	def test_add_to_cart(self, live_server, session, user):
 		"""Verify that possible to add product to cart via POST request."""
@@ -139,9 +189,12 @@ class TestShopAPIWithAuth:
 	
 	def test_add_nonexistent_product_to_cart(self, live_server, session):
 		"""Verify that impossible to add non-existent product to cart."""
+		logger.info("Step 1: send POST request")
 		url = f"{live_server.url}/api/shop/cart/"
 		payload = {"product_id": 9999, "quantity": 1}
 		response = session.post(url, json=payload)
+		
+		logger.info("Step 2: verify that add products to cart impossible")
 		assert_that(response.status_code).is_equal_to(404)
 	
 	def test_create_order(self, live_server, session, user):

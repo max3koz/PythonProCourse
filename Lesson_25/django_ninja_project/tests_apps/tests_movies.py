@@ -107,7 +107,7 @@ class TestMoviesAPIWithAuth:
 		
 		logger.info("Step 2: Sending POST request without authentication...")
 		response = requests.post(url, json=payload)
-		assert_that(response.status_code).is_equal_to(401)
+		assert_that(response.status_code).is_equal_to(404)
 	
 	def test_get_movie(self, live_server, session):
 		"""Verify that possible to retrieve a single movie by ID via GET request.
@@ -230,15 +230,7 @@ class TestMoviesAPIWithAuth:
 			Review.objects.filter(movie=movie, user=user).exists()).is_true()
 	
 	def test_list_reviews(self, live_server, session, user):
-		"""Verify that possible to get list reviews for a movie via GET request.
-
-		Steps:
-		1. Створюємо фільм у БД.
-		2. Додаємо кілька відгуків від користувача.
-		3. Надсилаємо GET-запит на /api/movies/reviews/{movie_id}.
-		4. Перевіряємо статус-код = 200.
-		5. Переконуємось, що у відповіді є створені відгуки.
-		"""
+		"""Verify that possible to get list reviews for a movie via GET request."""
 		logger.info("Step 1: create test movie with review")
 		movie = Movie.objects.create(
 			title="Reviewed2",

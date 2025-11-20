@@ -69,6 +69,7 @@ class TestTasksAPI:
 		return tasks
 	
 	def test_create_task(self, client, user):
+		"""Verify that possible to create task"""
 		logger.info("Step 1: send a POST request to create a task.")
 		payload = {
 			"title": "New Task",
@@ -89,8 +90,28 @@ class TestTasksAPI:
 		logger.info("Step 4: check that the task is saved in the database.")
 		assert_that(Task.objects.filter(title="New Task").exists()).is_true()
 	
+	def test_create_task_unauthorized(self, client):
+		"""Unauthenticated user cannot create a task."""
+		logger.info("Step 1: create task withiut user")
+		payload = {
+			"title": "UnauthorizedTask",
+			"description": "ShouldFail",
+			"status": "done",
+			"due_date": "2025-11-21"
+		}
+		
+		logger.info(f"Step 3: send a POST request.")
+		response = client.post("/api/tasks/", payload,
+		                       content_type="application/json")
+		
+		logger.info("Step 3: verify status code 401 and task was not added")
+		assert_that(response.status_code).is_equal_to(401)
+		assert_that(
+			Task.objects.filter(title="UnauthorizedTask").exists()).is_false()
+	
 	def test_list_tasks(self, client, user, tasks_suite):
-		logger.info("Крок 1: надсилаємо GET-запит для отримання списку задач.")
+		"""Verify that possible to get task list"""
+		logger.info("Step 1: send a GET request to get the list of tasks.")
 		response = client.get("/api/tasks/")
 		assert_that(response.status_code).is_equal_to(200)
 		
@@ -103,7 +124,36 @@ class TestTasksAPI:
 		titles = [task["title"] for task in data]
 		assert_that(titles).contains("Task A", "Task B", "Task C")
 	
+	def test_list_tasks_unauthorized(self, client):
+		"""Verify that impossible to get list task unauthenticated."""
+		logger.info("Step 1: create unauthenticated user and tasks")
+		user = User.objects.create_user(username="testuser",
+		                                password="testpass")
+		tasks = [Task.objects.create(user=user,
+		                             title="Task A",
+		                             description="First test task",
+		                             status="pending",
+		                             due_date="2025-11-20"),
+		         Task.objects.create(user=user,
+		                             title="Task B",
+		                             description="Second test task",
+		                             status="done",
+		                             due_date="2025-11-21"),
+		         Task.objects.create(user=user,
+		                             title="Task C",
+		                             description="Third test task",
+		                             status="pending",
+		                             due_date="2025-11-22"),
+		         ]
+		
+		logger.info(f"Step 3: send a GET request.")
+		response = client.get("/api/tasks/")
+		
+		logger.info("Step 3: verify status code 401")
+		assert_that(response.status_code).is_equal_to(401)
+	
 	def test_filter_tasks_by_status(self, client, user, tasks_suite):
+		"""Verify that possible to filter task by status"""
 		logger.info(
 			"Step 1: send a GET request with the status=pending filter.")
 		response = client.get("/api/tasks/?status=pending")
@@ -117,6 +167,7 @@ class TestTasksAPI:
 		assert_that(data[0]["status"]).is_equal_to("pending")
 	
 	def test_get_task(self, client, user, task):
+		"""Verify that possible to get task data"""
 		logger.info(f"Step 1: send a GET request for the task id={task.id}.")
 		response = client.get(f"/api/tasks/{task.id}")
 		assert_that(response.status_code).is_equal_to(200)
@@ -125,7 +176,21 @@ class TestTasksAPI:
 		data = response.json()
 		assert_that(data["title"]).is_equal_to("Test Task")
 	
+	def test_get_task_unauthorized(self, client):
+		"""Unauthenticated user cannot get a task by ID."""
+		logger.info("Step 1: create unauthenticated user and tasks")
+		User.objects.create(id=1, username="dummy", password="dummy")
+		task = Task.objects.create(title="TestTask", description="Desc",
+		                           user_id=1)
+		
+		logger.info(f"Step 3: send a GET request.")
+		response = client.get(f"/api/tasks/{task.id}")
+		
+		logger.info("Step 3: verify status code 401")
+		assert_that(response.status_code).is_equal_to(401)
+	
 	def test_update_task(self, client, user, task):
+		"""Verify that possible to update task"""
 		logger.info(
 			f"Step 1: send a PUT request to update the task id={task.id}.")
 		payload = {
@@ -152,7 +217,26 @@ class TestTasksAPI:
 		assert_that(task.status).is_equal_to("done")
 		assert_that(str(task.due_date)).is_equal_to("2025-12-01")
 	
+	def test_update_task_unauthorized(self, client):
+		"""Unauthenticated user cannot update a task."""
+		logger.info("Step 1: create unauthenticated user and task "
+		            "and data for update")
+		User.objects.create(id=1, username="dummy", password="dummy")
+		task = Task.objects.create(title="OldTask", description="Desc",
+		                           user_id=1)
+		payload = {"title": "UpdatedTask"}
+		
+		logger.info(f"Step 3: send a PUT request.")
+		response = client.put(f"/api/tasks/{task.id}", payload,
+		                      content_type="application/json")
+		
+		logger.info("Step 3: verify status code 401 and task was not updated")
+		assert_that(response.status_code).is_equal_to(401)
+		task.refresh_from_db()
+		assert_that(task.title).is_equal_to("OldTask")
+	
 	def test_delete_task(self, client, user, task):
+		"""Verify that possible to delete task"""
 		logger.info(f"Step 1: send a DELETE request for task id={task.id}.")
 		response = client.delete(f"/api/tasks/{task.id}")
 		assert_that(response.status_code).is_equal_to(200)
@@ -166,3 +250,18 @@ class TestTasksAPI:
 		            "from the database.")
 		exists = Task.objects.filter(id=task.id).exists()
 		assert_that(exists).is_false()
+	
+	def test_delete_task_unauthorized(self, client):
+		"""Unauthenticated user cannot delete a task."""
+		logger.info("Step 1: create unauthenticated user and task "
+		            "and data for delete")
+		User.objects.create(id=1, username="dummy", password="dummy")
+		task = Task.objects.create(title="DeleteMe", description="Desc",
+		                           user_id=1)
+		
+		logger.info(f"Step 3: send a DELETE request.")
+		response = client.delete(f"/api/tasks/{task.id}")
+		
+		logger.info("Step 3: verify status code 401 and task exist")
+		assert_that(response.status_code).is_equal_to(401)
+		assert_that(Task.objects.filter(id=task.id).exists()).is_true()

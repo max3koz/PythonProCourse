@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from ninja import Router
 from ninja.responses import Response
@@ -10,11 +11,9 @@ blog_router = Router(tags=["blog"])
 
 # ------------------ Tags ------------------
 @blog_router.post("/tags/", response=TagOut)
+@login_required
 def create_tag(request, payload: TagIn) -> Response:
-	"""
-	Create a new tag.
-	Requires authentication.
-	"""
+	"""Create a new tag. Requires authentication."""
 	if not request.user.is_authenticated:
 		return Response({"detail": "Authentication required"}, status=401)
 	tag = Tag.objects.create(**payload.dict())
@@ -22,20 +21,17 @@ def create_tag(request, payload: TagIn) -> Response:
 
 
 @blog_router.get("/tags/", response=list[TagOut])
+@login_required
 def list_tags(request):
-	"""
-	Retrieve all tags.
-	"""
+	"""Retrieve all tags."""
 	return Tag.objects.all()
 
 
 # ------------------ Posts ------------------
 @blog_router.post("/", response=PostOut)
+@login_required
 def create_post(request, payload: PostIn) -> Response:
-	"""
-	Create a new blog post.
-	Requires authentication.
-	"""
+	"""Create a new blog post. Requires authentication."""
 	if not request.user.is_authenticated:
 		return Response({"detail": "Authentication required"}, status=401)
 	post = Post.objects.create(
@@ -48,11 +44,9 @@ def create_post(request, payload: PostIn) -> Response:
 
 
 @blog_router.get("/", response=list[PostOut])
+@login_required
 def list_posts(request, tag: str = None):
-	"""
-	Retrieve all blog posts.
-	Supports filtering by tag name.
-	"""
+	"""Retrieve all blog posts. Supports filtering by tag name."""
 	qs = Post.objects.all()
 	if tag:
 		qs = qs.filter(tags__name__icontains=tag)
@@ -60,19 +54,16 @@ def list_posts(request, tag: str = None):
 
 
 @blog_router.get("/{post_id}", response=PostOut)
+@login_required
 def get_post(request, post_id: int):
-	"""
-	Retrieve a single blog post by ID.
-	"""
+	"""Retrieve a single blog post by ID."""
 	return get_object_or_404(Post, id=post_id)
 
 
 @blog_router.put("/{post_id}", response=PostOut)
+@login_required
 def update_post(request, post_id: int, payload: PostIn):
-	"""
-	Update an existing blog post.
-	Requires authentication.
-	"""
+	"""Update an existing blog post. Requires authentication."""
 	if not request.user.is_authenticated:
 		return Response({"detail": "Authentication required"}, status=401)
 	post = get_object_or_404(Post, id=post_id)
@@ -84,11 +75,9 @@ def update_post(request, post_id: int, payload: PostIn):
 
 
 @blog_router.delete("/{post_id}")
+@login_required
 def delete_post(request, post_id: int):
-	"""
-	Delete a blog post.
-	Requires authentication.
-	"""
+	"""Delete a blog post. Requires authentication."""
 	if not request.user.is_authenticated:
 		return Response({"detail": "Authentication required"}, status=401)
 	post = get_object_or_404(Post, id=post_id)
@@ -98,11 +87,9 @@ def delete_post(request, post_id: int):
 
 # ------------------ Comments ------------------
 @blog_router.post("/comments/", response=CommentOut)
+@login_required
 def add_comment(request, payload: CommentIn) -> Response:
-	"""
-	Add a comment to a blog post.
-	Requires authentication.
-	"""
+	"""Add a comment to a blog post. Requires authentication."""
 	if not request.user.is_authenticated:
 		return Response({"detail": "Authentication required"}, status=401)
 	post = get_object_or_404(Post, id=payload.post_id)
@@ -112,9 +99,8 @@ def add_comment(request, payload: CommentIn) -> Response:
 
 
 @blog_router.get("/comments/{post_id}", response=list[CommentOut])
+@login_required
 def list_comments(request, post_id: int):
-	"""
-	Retrieve all comments for a specific blog post.
-	"""
+	"""Retrieve all comments for a specific blog post."""
 	post = get_object_or_404(Post, id=post_id)
 	return post.comments.all()

@@ -20,6 +20,7 @@ from apps.library.api import library_router
 from apps.monitoring.api import monitoring_router
 from apps.movies.api import movies_router
 from apps.shop.api import shop_router
+from apps.students.api import students_router
 from apps.tasks.api import router as tasks_router
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
@@ -49,6 +50,9 @@ api.add_router("/monitoring", monitoring_router)
 
 # Library API
 api.add_router("/library", library_router)
+
+# Students API
+api.add_router("/students", students_router)
 
 
 def root_redirect(request):

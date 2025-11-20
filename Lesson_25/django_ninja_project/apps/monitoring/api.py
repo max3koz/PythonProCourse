@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from ninja import Router
 from ninja.responses import Response
@@ -10,6 +11,7 @@ monitoring_router = Router(tags=["monitoring"])
 
 # ------------------ Servers ------------------
 @monitoring_router.post("/servers/", response=ServerOut)
+@login_required
 def create_server(request, payload: ServerIn) -> Response:
 	"""Create a new server. Requires authentication."""
 	if not request.user.is_authenticated:
@@ -19,18 +21,21 @@ def create_server(request, payload: ServerIn) -> Response:
 
 
 @monitoring_router.get("/servers/", response=list[ServerOut])
+@login_required
 def list_servers(request):
 	"""Retrieve all servers."""
 	return Server.objects.all()
 
 
 @monitoring_router.get("/servers/{server_id}", response=ServerOut)
+@login_required
 def get_server(request, server_id: int):
 	"""Retrieve a single server by ID."""
 	return get_object_or_404(Server, id=server_id)
 
 
 @monitoring_router.put("/servers/{server_id}", response=ServerOut)
+@login_required
 def update_server(request, server_id: int, payload: ServerIn):
 	"""Update an existing server. Requires authentication."""
 	if not request.user.is_authenticated:
@@ -43,6 +48,7 @@ def update_server(request, server_id: int, payload: ServerIn):
 
 
 @monitoring_router.delete("/servers/{server_id}")
+@login_required
 def delete_server(request, server_id: int):
 	"""Delete a server. Requires authentication."""
 	if not request.user.is_authenticated:
@@ -54,6 +60,7 @@ def delete_server(request, server_id: int):
 
 # ------------------ Metrics ------------------
 @monitoring_router.post("/metrics/", response=MetricOut)
+@login_required
 def add_metric(request, payload: MetricIn) -> Response:
 	"""Add metrics for a server. Requires authentication."""
 	if not request.user.is_authenticated:
@@ -69,6 +76,7 @@ def add_metric(request, payload: MetricIn) -> Response:
 
 
 @monitoring_router.get("/metrics/{server_id}", response=list[MetricOut])
+@login_required
 def list_metrics(request, server_id: int):
 	"""Retrieve all metrics for a specific server."""
 	server = get_object_or_404(Server, id=server_id)

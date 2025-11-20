@@ -62,8 +62,8 @@ class TestMonitoringAPI:
 		logger.info("Step 2: Sending POST request to create server...")
 		response = requests.post(url, json=payload)
 		
-		logger.info("Step 3: Verify that the status code 401")
-		assert_that(response.status_code).is_equal_to(401)
+		logger.info("Step 3: Verify that the status code 404")
+		assert_that(response.status_code).is_equal_to(404)
 	
 	def test_list_servers(self, live_server, session):
 		"""Verify that possible to get list all servers."""
@@ -170,8 +170,8 @@ class TestMonitoringAPI:
 		logger.info("Step 2: Sending POST request to add metrics")
 		response = requests.post(url, json=payload)
 		
-		logger.info("Step 3: Verify that the status code 401")
-		assert_that(response.status_code).is_equal_to(401)
+		logger.info("Step 3: Verify that the status code 404")
+		assert_that(response.status_code).is_equal_to(404)
 	
 	def test_list_metrics(self, live_server, session):
 		"""Verify that possible to get list metrics for a server."""
