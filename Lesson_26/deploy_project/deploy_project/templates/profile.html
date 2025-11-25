@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profiles</title>
+</head>
+<body>
+    <h1>Список профілів</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Додати профіль</button>
+    </form>
+
+    <hr>
+
+    {% for profile in profiles %}
+        <p>{{ profile.name }}</p>
+        <img src="{{ profile.avatar.url }}" alt="{{ profile.name }}" width="150">
+    {% endfor %}
+</body>
+</html>
