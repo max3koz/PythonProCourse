@@ -11,7 +11,7 @@ logging.basicConfig(filename="app.log",
 
 
 def get_weather(city: str) -> str:
-	"""Отримуємо погоду з OpenWeather API"""
+	"""Get weather from OpenWeather API"""
 	start_time = datetime.now()
 	url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric&lang=ua"
 	response = requests.get(url).json()
