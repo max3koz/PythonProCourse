@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Realtime Dashboard</title>
+</head>
+<body>
+<h1>Realtime Dashboard</h1>
+
+<!-- Блок автентифікації -->
+<section>
+    {% if user.is_authenticated %}
+    <p>Ви увійшли як: <b>{{ user.username }}</b></p>
+    <form action="{% url 'logout' %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit">Вийти</button>
+    </form>
+    {% else %}
+    <a href="{% url 'register' %}">
+        <button>Зареєструватися</button>
+    </a>
+    <a href="{% url 'login' %}">
+        <button>Увійти</button>
+    </a>
+    {% endif %}
+</section>
+
+<!-- Consumers counter -->
+<section>
+    <h2>Лічильник онлайн-користувачів</h2>
+    <p>Онлайн: <span id="onlineCount">0</span></p>
+</section>
+
+<!-- Push Notifications -->
+<section>
+    <h2>Push Notifications</h2>
+    <button id="notifyBtn">Надіслати нотифікацію</button>
+    <div id="notifications"></div>
+</section>
+
+<script>
+    // WebSocket для лічильника
+    const counterSocket = new WebSocket("ws://127.0.0.1:8000/ws/online-counter/");
+    counterSocket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        document.getElementById("onlineCount").textContent = data.online_users;
+    };
+
+    // WebSocket для нотифікацій
+    const notifySocket = new WebSocket("ws://127.0.0.1:8000/ws/notifications/");
+    notifySocket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        const div = document.getElementById("notifications");
+        div.innerHTML += `<p>${data.notification}</p>`;
+    };
+
+    document.getElementById("notifyBtn").onclick = () => {
+        notifySocket.send(JSON.stringify({message: "🔔 Нова нотифікація!"}));
+    };
+</script>
+
+<!-- Chat -->
+<section>
+    <h2>Чат</h2>
+    <div id="chatBox"></div>
+    <input id="chatInput" type="text" placeholder="Введіть повідомлення..."/>
+    <button id="chatSend">Надіслати</button>
+</section>
+
+<script>
+    const chatSocket = new WebSocket("ws://127.0.0.1:8000/ws/chat/");
+
+    chatSocket.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+        if (data.error) {
+            alert(data.error);
+        } else {
+            const chatBox = document.getElementById("chatBox");
+            chatBox.innerHTML += `<p><b>${data.username}:</b> ${data.message}</p>`;
+        }
+    };
+
+    document.getElementById("chatSend").onclick = function() {
+        const input = document.getElementById("chatInput");
+        chatSocket.send(JSON.stringify({message: input.value}));
+        input.value = "";
+    };
+</script>
+</body>
+</html>
